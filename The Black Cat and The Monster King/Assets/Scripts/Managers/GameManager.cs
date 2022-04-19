@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,7 +22,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Respawning")]
     public float waitToRespawn;
-    public CinemachineBrain theCM;
 
     void Awake()
     {
@@ -88,7 +86,6 @@ public class GameManager : MonoBehaviour
         PlayerHealthController.instance.theSR.enabled = false;
         PauseMenu.instance.canPause = false;
         UIController.instance.isDead = true;
-        theCM.enabled = false;
 
         yield return new WaitForSeconds(waitToRespawn - (1 / UIController.instance.fadeSpeed));
 
@@ -104,7 +101,6 @@ public class GameManager : MonoBehaviour
         UIController.instance.UpdateStaminaUI();
         PauseMenu.instance.canPause = true;
         UIController.instance.isDead = false;
-        theCM.enabled = true;
     }
 
     public void LoadNextLevel()
