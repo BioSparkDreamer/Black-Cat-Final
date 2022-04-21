@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class CutsceneController : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class CutsceneController : MonoBehaviour
     public Animator catAnimator;
     public SpriteRenderer theCatSR;
     public Animator playerAnimator;
-    public FadeScreen fader;
+    private FadingScreen theFader;
+    private LoadingScreen theLS;
+    public string levelToLoad;
 
     [Header("Cutscene Part 1 Variables")]
     public Transform movePoint1;
@@ -39,11 +42,16 @@ public class CutsceneController : MonoBehaviour
         {
             instance = this;
         }
+
+        cutsceneDialogue = FindObjectOfType<CutsceneDialogue>();
+        theFader = FindObjectOfType<FadingScreen>();
+        theLS = FindObjectOfType<LoadingScreen>();
+
     }
 
     void Start()
     {
-        cutsceneDialogue = FindObjectOfType<CutsceneDialogue>();
+
     }
 
     void Update()
@@ -92,10 +100,29 @@ public class CutsceneController : MonoBehaviour
             if (Vector3.Distance(playerPoint.transform.position, movePoint2.position) < .1f)
             {
                 cutScene3HasEnded = true;
-                fader.FadeOut();
+                PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "_unlocked", 1);
+                EndLevel();
             }
         }
+    }
 
+    public void EndLevel()
+    {
+        StartCoroutine(EndLevelCo());
+    }
 
+    public IEnumerator EndLevelCo()
+    {
+        theFader.FadeToBlack();
+        cutsceneDialogue.pauseMenu.canPause = false;
+
+        yield return new WaitForSeconds((1f / theFader.fadeSpeed) + .5f);
+
+        theFader.FadeToBlack();
+
+        yield return new WaitForSeconds((1f / theFader.fadeSpeed) + .5f);
+
+        theFader.FadeFromBlack();
+        theLS.LoadScene(levelToLoad);
     }
 }

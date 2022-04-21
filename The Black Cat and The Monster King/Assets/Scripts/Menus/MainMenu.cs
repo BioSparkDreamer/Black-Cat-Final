@@ -7,39 +7,29 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [Header("Starting Game")]
-    public string sceneToLoad;
-
     [Header("Menu Object Variables")]
     public GameObject[] buttons;
+    public string startScene, continueScene;
     public CanvasGroup optionsMenu, creditsMenu, controlsMenu, mainMenu;
-    public GameObject startMenu;
+    public GameObject startMenu, continueButton;
+
+    [Header("Object Variables")]
+    private FadingScreen theFader;
+    private LoadingScreen theLS;
+
+    void Awake()
+    {
+        theFader = FindObjectOfType<FadingScreen>();
+        theLS = FindObjectOfType<LoadingScreen>();
+    }
 
     void Start()
     {
-
-    }
-
-    void Update()
-    {
-
-    }
-
-    public void StartGame()
-    {
-        SceneManager.LoadScene(sceneToLoad);
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-        Debug.Log("Quit Game");
-    }
-
-    public void OpenMenu()
-    {
-        startMenu.SetActive(false);
-        mainMenu.alpha = 1;
+        //Turn the continue button on or off depending if there is a key found
+        if (PlayerPrefs.HasKey(startScene + "_unlocked"))
+            continueButton.SetActive(true);
+        else
+            continueButton.SetActive(false);
     }
 
     public void ChangeActiveButtons(int buttonToChose)
@@ -47,6 +37,30 @@ public class MainMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(buttons[buttonToChose]);
     }
+
+    public void ContinueGame()
+    {
+        SceneManager.LoadScene(continueScene);
+    }
+
+    public void NewGame()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
+    public void OpenMenu()
+    {
+        startMenu.SetActive(false);
+        mainMenu.alpha = 1;
+        mainMenu.blocksRaycasts = true;
+    }
+
+    public void CloseMenu()
+    {
+        mainMenu.alpha = 0;
+        mainMenu.blocksRaycasts = false;
+    }
+
     public void OpenOptions()
     {
         optionsMenu.alpha = 1;
@@ -83,8 +97,29 @@ public class MainMenu : MonoBehaviour
         controlsMenu.blocksRaycasts = false;
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Quit Game");
+    }
+
     public void PlayButtonSound()
     {
         AudioManager.instance.PlaySFXAdjusted(0);
+    }
+
+    public void FadeToLoadScreen(string levelToLoad)
+    {
+        StartCoroutine(FadeToLoadCo(levelToLoad));
+    }
+
+    public IEnumerator FadeToLoadCo(string levelToLoad)
+    {
+        theFader.FadeToBlack();
+
+        yield return new WaitForSeconds((1f / theFader.fadeSpeed) + .5f);
+
+        theFader.FadeFromBlack();
+        theLS.LoadScene(levelToLoad);
     }
 }

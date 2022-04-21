@@ -12,16 +12,6 @@ public class LoadingScreen : MonoBehaviour
     public TMP_Text loadingText;
     public Slider loadingBar;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
     public void LoadScene(string levelToLoad)
     {
         loadScreen.SetActive(true);
@@ -44,6 +34,11 @@ public class LoadingScreen : MonoBehaviour
                     operation.allowSceneActivation = true;
                 }
             }
+            else
+            {
+                loadingText.text = "Loading...";
+            }
+
             yield return null;
         }
     }

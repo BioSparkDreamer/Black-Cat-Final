@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -120,6 +120,7 @@ MonoBehaviour:
   damageToDeal: 1
   knockBackForceX: 8
   knockBackForceY: 4
+  canKnockBack: 0
 --- !u!70 &7577463547975959910
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -151,6 +152,10 @@ MonoBehaviour:
   health: 2
   soulsToAdd: 0
   enemyObject: {fileID: 7577463548597178440}
+  deathEffect: {fileID: 0}
+  isMonster: 0
+  isSlime: 0
+  isBat: 0
 --- !u!1 &7577463548157548561
 GameObject:
   m_ObjectHideFlags: 0

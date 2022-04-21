@@ -21,10 +21,13 @@ public class CutsceneDialogue : MonoBehaviour
 
     [Header("Skip Variables")]
     public GameObject skipButton;
+    [HideInInspector] public PauseMenu pauseMenu;
 
     void Start()
     {
         dialogue = FindObjectOfType<DialogueManager>();
+        pauseMenu = FindObjectOfType<PauseMenu>();
+
         currentDialogueBox = 0;
         currentLine = 0;
     }
@@ -71,6 +74,20 @@ public class CutsceneDialogue : MonoBehaviour
                     {
                         EndDialogue();
                     }
+                }
+            }
+
+            if (Input.GetButtonDown("Pause"))
+            {
+                if (pauseMenu.pauseScreen.alpha == 1)
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(pauseMenu.resumeButton);
+                }
+                else
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(skipButton);
                 }
             }
         }

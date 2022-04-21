@@ -95,7 +95,7 @@ public class SettingsController : MonoBehaviour
     {
         //Calculating FPS
         float fps = 1 / Time.unscaledDeltaTime;
-        fpsText.text = "FPS: " + fps.ToString("F2");
+        fpsText.text = "FPS: " + fps.ToString("F0");
     }
 
     public void FullScreenMode(bool isFullScreenOn)

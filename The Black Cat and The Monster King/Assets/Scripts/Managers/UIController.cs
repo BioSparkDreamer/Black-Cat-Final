@@ -26,15 +26,6 @@ public class UIController : MonoBehaviour
     public Slider soulSlider;
     public TMP_Text soulText;
 
-    [Header("Fade Screen Variables")]
-    public Image fadeScreen;
-    public float fadeSpeed;
-    public bool shouldFadeToBlack, shouldFadeFromBlack;
-
-    [Header("Time In Level Variables")]
-    public float timerInLevel = 150f;
-    public TMP_Text timerText;
-
     void Awake()
     {
         instance = this;
@@ -45,49 +36,11 @@ public class UIController : MonoBehaviour
         UpdateHealthUI();
         UpdateStaminaUI();
         UpdateSoulUI();
-        FadeFromBlack();
     }
 
     void Update()
     {
-        if (shouldFadeToBlack)
-        {
-            fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.g, fadeScreen.color.b,
-            Mathf.MoveTowards(fadeScreen.color.a, 1f, fadeSpeed * Time.deltaTime));
-            if (fadeScreen.color.a == 1f)
-            {
-                shouldFadeToBlack = false;
-            }
-        }
 
-        if (shouldFadeFromBlack)
-        {
-            fadeScreen.color = new Color(fadeScreen.color.r, fadeScreen.color.r, fadeScreen.color.b,
-            Mathf.MoveTowards(fadeScreen.color.a, 0f, fadeSpeed * Time.deltaTime));
-            if (fadeScreen.color.a == 0f)
-            {
-                shouldFadeFromBlack = false;
-            }
-        }
-
-        if (!GameManager.instance.levelIsEnding)
-        {
-            if (timerInLevel > 0)
-            {
-                timerInLevel -= Time.deltaTime;
-                timerText.text = "Time Left " + timerInLevel.ToString("F0");
-                if (timerInLevel <= 30)
-                {
-                    timerText.color = Color.red;
-                }
-            }
-            else if (timerInLevel <= 0)
-            {
-                timerText.text = "Out of Time!";
-                timerText.color = Color.red;
-                GameOverScreen();
-            }
-        }
     }
 
     public void UpdateHealthUI()
@@ -137,17 +90,5 @@ public class UIController : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(restartButton);
         Time.timeScale = 0;
-    }
-
-    public void FadeToBlack()
-    {
-        shouldFadeToBlack = true;
-        shouldFadeFromBlack = false;
-    }
-
-    public void FadeFromBlack()
-    {
-        shouldFadeToBlack = false;
-        shouldFadeFromBlack = true;
     }
 }

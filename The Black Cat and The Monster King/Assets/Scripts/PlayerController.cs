@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private float movX;
     public float jumpForce;
     private bool facingRight;
+    [HideInInspector] public bool canMove = true;
 
     [Header("GroundCheck Variables")]
     public LayerMask groundLayer;
@@ -67,11 +68,12 @@ public class PlayerController : MonoBehaviour
         theSR = GetComponent<SpriteRenderer>();
 
         startSpeed = moveSpeed;
+        canMove = true;
     }
 
     void Update()
     {
-        if (!PauseMenu.instance.isPaused && !UIController.instance.isDead)
+        if (canMove)
         {
             if (knockBackCounter <= 0)
             {

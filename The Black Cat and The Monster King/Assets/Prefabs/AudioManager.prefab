@@ -101,9 +101,9 @@ MonoBehaviour:
   levelMusic: {fileID: 685766912531401327}
   menuMusic: {fileID: 685766914054562525}
   cutSceneMusic: {fileID: 5940037310433020297}
-  isLevel: 1
-  isMenu: 0
-  isCutScene: 0
+  isLevel: 0
+  isMenu: 1
+  isCutscene: 0
 --- !u!1 &685766912531401321
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,12 +23,17 @@ public class GameManager : MonoBehaviour
     [Header("Respawning")]
     public float waitToRespawn;
 
+    [Header("Object Variables")]
+    private FadingScreen theFader;
+
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
+
+        theFader = FindObjectOfType<FadingScreen>();
     }
 
     void Start()
@@ -87,13 +92,13 @@ public class GameManager : MonoBehaviour
         PauseMenu.instance.canPause = false;
         UIController.instance.isDead = true;
 
-        yield return new WaitForSeconds(waitToRespawn - (1 / UIController.instance.fadeSpeed));
+        yield return new WaitForSeconds(waitToRespawn - (1 / theFader.fadeSpeed));
 
-        UIController.instance.FadeToBlack();
+        theFader.FadeToBlack();
 
-        yield return new WaitForSeconds((1f / UIController.instance.fadeSpeed) + 1f);
+        yield return new WaitForSeconds((1f / theFader.fadeSpeed) + 1f);
 
-        UIController.instance.FadeFromBlack();
+        theFader.FadeFromBlack();
 
         PlayerController.instance.transform.position = spawnPoint;
         PlayerHealthController.instance.theSR.enabled = true;
@@ -116,15 +121,23 @@ public class GameManager : MonoBehaviour
     private IEnumerator EndLevelCO()
     {
         PauseMenu.instance.canPause = false;
-        UIController.instance.isDead = true;
+        PlayerController.instance.canMove = false;
+
         levelIsEnding = true;
-        UIController.instance.timerText.gameObject.SetActive(false);
         PlayerController.instance.theRB.velocity = new Vector2(5f, PlayerController.instance.theRB.velocity.y);
 
         yield return new WaitForSeconds(2f);
-        UIController.instance.FadeToBlack();
-        yield return new WaitForSeconds((1f / UIController.instance.fadeSpeed) + 1f);
+        theFader.FadeToBlack();
+        yield return new WaitForSeconds((1f / theFader.fadeSpeed) + 1f);
+
+        StoreSaveData();
 
         SceneManager.LoadScene(nextLevel);
+    }
+
+    public void StoreSaveData()
+    {
+        PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "_unlocked", 1);
+        PlayerPrefs.SetString("CurrentLevel", SceneManager.GetActiveScene().name);
     }
 }

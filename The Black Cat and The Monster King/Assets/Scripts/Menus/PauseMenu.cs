@@ -9,44 +9,53 @@ public class PauseMenu : MonoBehaviour
     public static PauseMenu instance;
 
     [Header("Pausing Variables")]
-    public GameObject pauseMenu;
-    public bool isPaused;
+    public CanvasGroup pauseScreen;
     public bool canPause = true;
     public GameObject resumeButton;
+    [HideInInspector] public bool isPaused;
 
     [Header("Loading to Main Menu")]
-    public string loadToMenu;
+    public string loadToMenu, loadToLevelSelect;
 
     [Header("Pause Menu Variables")]
     public GameObject[] buttons;
-    public CanvasGroup optionsMenu, creditsMenu, controlsMenu;
+    public CanvasGroup pauseMenu, optionsMenu, controlsMenu, creditsMenu;
 
     void Awake()
     {
-        instance = this;
-    }
-
-    void Start()
-    {
-
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
     void Update()
     {
         if (Input.GetButtonDown("Pause") && canPause)
         {
-            ResumeandUnPause();
+            PauseandUnPause();
         }
     }
 
-    public void ResumeandUnPause()
+    public void ChangeActiveButtons(int buttonToChose)
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(buttons[buttonToChose]);
+    }
+
+    public void PauseandUnPause()
     {
         //Do if Player is Pausing the Game
-        if (!pauseMenu.activeInHierarchy && !isPaused && !UIController.instance.isDead)
+        if (pauseScreen.alpha == 0)
         {
-            pauseMenu.SetActive(true);
+            pauseScreen.alpha = 1;
+            OpenPauseMenu();
             isPaused = true;
             Time.timeScale = 0;
+
+            if (PlayerController.instance != null)
+                PlayerController.instance.canMove = false;
+
             AudioManager.instance.StopLevelMusic();
 
             //Make EventSystem select resume button when pausing game
@@ -54,20 +63,22 @@ public class PauseMenu : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(resumeButton);
         }
 
-        //Do if player is UnPausing the Game
+        //Do if player is Unpausing the Game
         else
         {
-            pauseMenu.SetActive(false);
-            isPaused = false;
+            pauseScreen.alpha = 0;
             Time.timeScale = 1;
+            isPaused = false;
             AudioManager.instance.ResumeLevelMusic();
-        }
-    }
 
-    public void QuitToMenu()
-    {
-        ChangeTimeScale();
-        SceneManager.LoadScene(loadToMenu);
+            if (PlayerController.instance != null)
+                PlayerController.instance.canMove = true;
+
+            ClosePauseMenu();
+            CloseControls();
+            CloseOptions();
+            CloseCredits();
+        }
     }
 
     public void RestartScene()
@@ -76,24 +87,32 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void ChangeTimeScale()
+    public void LoadLevelSelect()
     {
-        if (Time.timeScale == 0)
-        {
-            Time.timeScale = 1;
-        }
+        ChangeTimeScale();
+        PlayerPrefs.SetString("CurrentLevel", SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(loadToLevelSelect);
     }
 
-    public void PlayButtonSound()
+    public void QuitToMenu()
     {
-        AudioManager.instance.PlaySFXAdjusted(0);
+        ChangeTimeScale();
+        PlayerPrefs.SetString("CurrentLevel", SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(loadToMenu);
     }
 
-    public void ChangeActiveButtons(int buttonToChose)
+    public void OpenPauseMenu()
     {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(buttons[buttonToChose]);
+        pauseMenu.alpha = 1;
+        pauseMenu.blocksRaycasts = true;
     }
+
+    public void ClosePauseMenu()
+    {
+        pauseMenu.alpha = 0;
+        pauseMenu.blocksRaycasts = false;
+    }
+
     public void OpenOptions()
     {
         optionsMenu.alpha = 1;
@@ -128,5 +147,18 @@ public class PauseMenu : MonoBehaviour
     {
         controlsMenu.alpha = 0;
         controlsMenu.blocksRaycasts = false;
+    }
+
+    public void ChangeTimeScale()
+    {
+        if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
+    }
+
+    public void PlayButtonSound()
+    {
+        AudioManager.instance.PlaySFXAdjusted(0);
     }
 }
