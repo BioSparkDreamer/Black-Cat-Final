@@ -9,19 +9,36 @@ public class EnemyHealthController : MonoBehaviour
     public GameObject deathEffect;
     public bool isMonster, isSlime, isBat;
 
+    [Header("Sprite Color Variables")]
+    private SpriteRenderer theSR;
+    public Color defaultColor, hurtColor;
+    public float hurtTime;
+    private float hurtCounter;
+
     void Start()
     {
-
+        theSR = GetComponent<SpriteRenderer>();
+        defaultColor = theSR.color;
     }
 
     void Update()
     {
+        if (hurtCounter > 0)
+        {
+            hurtCounter -= Time.deltaTime;
+            theSR.color = hurtColor;
 
+            if (hurtCounter <= 0)
+            {
+                theSR.color = defaultColor;
+            }
+        }
     }
 
     public void TakeDamage(int damageToDeal)
     {
         health -= damageToDeal;
+        hurtCounter = hurtTime;
 
         if (health <= 0)
         {
@@ -33,11 +50,11 @@ public class EnemyHealthController : MonoBehaviour
             {
                 AudioManager.instance.PlaySFXAdjusted(1);
             }
-            if(isMonster)
+            if (isMonster)
             {
                 AudioManager.instance.PlaySFXAdjusted(2);
             }
-            if(isSlime)
+            if (isSlime)
             {
                 AudioManager.instance.PlaySFXAdjusted(5);
             }

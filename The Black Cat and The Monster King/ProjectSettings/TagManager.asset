@@ -7,6 +7,7 @@ TagManager:
   - HeartsEmpty
   - HeartsFull
   - Enemy
+  - Ladder
   layers:
   - Default
   - TransparentFX
@@ -49,6 +50,9 @@ TagManager:
     locked: 0
   - name: Environment Art
     uniqueID: 2023422247
+    locked: 0
+  - name: Behind Ground
+    uniqueID: 2416883739
     locked: 0
   - name: Ground Tilemap
     uniqueID: 4013834421

@@ -66,7 +66,10 @@ public class PauseMenu : MonoBehaviour
         //Do if player is Unpausing the Game
         else
         {
-            pauseScreen.alpha = 0;
+            ClosePauseMenu();
+            CloseControls();
+            CloseOptions();
+            CloseCredits();
             Time.timeScale = 1;
             isPaused = false;
             AudioManager.instance.ResumeLevelMusic();
@@ -74,10 +77,7 @@ public class PauseMenu : MonoBehaviour
             if (PlayerController.instance != null)
                 PlayerController.instance.canMove = true;
 
-            ClosePauseMenu();
-            CloseControls();
-            CloseOptions();
-            CloseCredits();
+            pauseScreen.alpha = 0;
         }
     }
 

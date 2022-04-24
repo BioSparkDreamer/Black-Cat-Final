@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1956671075
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 8617908680970063603, guid: db2dcae7f47a70a4d91a5119e923550b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -117,10 +117,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025878874a49d1d43a63e30eb93c850e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageToDeal: 1
+  damageToDeal: 2
   knockBackForceX: 8
   knockBackForceY: 4
-  canKnockBack: 0
+  canKnockBack: 1
 --- !u!70 &7577463547975959910
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -149,13 +149,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f99e314b07d7deb42a7eca302fda1b72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
-  soulsToAdd: 0
+  health: 1
+  soulsToAdd: 10
   enemyObject: {fileID: 7577463548597178440}
-  deathEffect: {fileID: 0}
-  isMonster: 0
+  deathEffect: {fileID: 7767102811867167724, guid: cbd1074a19490454baf0f9dee8abb4ae, type: 3}
+  isMonster: 1
   isSlime: 0
   isBat: 0
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  hurtColor: {r: 1, g: 0.44716978, b: 0.44716978, a: 1}
+  hurtTime: 0.5
 --- !u!1 &7577463548157548561
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +183,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7577463548157548561}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5900002, y: 0.31, z: 0}
+  m_LocalPosition: {x: -3, y: 0.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7577463548597178444}
@@ -211,7 +214,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7577463548597178440}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 29.82, y: 0.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -257,7 +260,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!1 &7577463548721193781
 GameObject:
@@ -283,7 +286,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7577463548721193781}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.63, y: 0.31, z: 0}
+  m_LocalPosition: {x: 3, y: 0.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7577463548597178444}

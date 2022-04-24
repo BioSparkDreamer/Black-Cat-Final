@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7332177937369096170}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 74.57, y: 12.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 7332177937369096171}
-  moveSpeed: 2
+  moveSpeed: 3
   leftPoint: {fileID: 7332177938259041399}
   rightPoint: {fileID: 7332177939293018078}
   movingRight: 0
@@ -71,7 +71,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!1 &7332177938259041398
 GameObject:
@@ -97,7 +97,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7332177938259041398}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.09, y: 0.31, z: 0}
+  m_LocalPosition: {x: -5, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7332177937369096173}
@@ -177,7 +177,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1956671075
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 3886212694683342607, guid: 4fbac4d43e1cb5542ab9a3ab6475b59e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -222,9 +222,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToDeal: 1
-  knockBackForceX: 8
-  knockBackForceY: 4
-  canKnockBack: 0
+  knockBackForceX: 9
+  knockBackForceY: 3
+  canKnockBack: 1
 --- !u!70 &7332177938599392806
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -254,12 +254,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
-  soulsToAdd: 0
+  soulsToAdd: 10
   enemyObject: {fileID: 7332177937369096170}
-  deathEffect: {fileID: 0}
-  isMonster: 0
+  deathEffect: {fileID: 1923620527451593015, guid: 46f052a7af0a31548b180678c77d79d5, type: 3}
+  isMonster: 1
   isSlime: 0
   isBat: 0
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  hurtColor: {r: 0.9716981, g: 0.3886792, b: 0.3886792, a: 1}
+  hurtTime: 0.5
 --- !u!60 &7332177938599392794
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -295,14 +298,15 @@ PolygonCollider2D:
       - {x: 0.28, y: -0.17999999}
       - {x: 0.53, y: -0.19}
       - {x: 0.56, y: -0.11}
-      - {x: 0.84, y: -0.17999999}
-      - {x: 1.09, y: -0.19}
-      - {x: 1.16, y: -0.16}
-      - {x: 1.16, y: 0.03}
-      - {x: 1.1, y: 0.14999999}
-      - {x: 0.84, y: 0.099999994}
-      - {x: 0.82, y: 0.08}
-      - {x: 0.39999998, y: 0.12}
+      - {x: 0.83716434, y: -0.1487608}
+      - {x: 1.0814806, y: -0.15024133}
+      - {x: 1.0918441, y: -0.086162575}
+      - {x: 1.0884471, y: -0.0210305}
+      - {x: 1.0804827, y: 0.0016011745}
+      - {x: 1.0517187, y: 0.08752161}
+      - {x: 0.837158, y: 0.08012066}
+      - {x: 0.8313614, y: 0.08}
+      - {x: 0.38863856, y: 0.06604271}
       - {x: 0.37, y: 0.19}
       - {x: 0.049999997, y: 0.56}
       - {x: 0.12, y: 0.90999997}
@@ -358,7 +362,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7332177939293018077}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.63, y: 0.31, z: 0}
+  m_LocalPosition: {x: 5, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7332177937369096173}

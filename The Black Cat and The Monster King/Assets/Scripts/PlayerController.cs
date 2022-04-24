@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement Variables")]
     public float moveSpeed;
-    private float movX;
+    private float movX, movY;
     public float jumpForce;
     private bool facingRight;
     [HideInInspector] public bool canMove = true;
@@ -51,6 +51,12 @@ public class PlayerController : MonoBehaviour
     public float waitToMove;
     private float waitCounter;
 
+    [Header("Ladder Variables")]
+    public float climbSpeed;
+    public float climbHorizontalSpeed;
+    public bool onLadders;
+    private float startGravity;
+
     void Awake()
     {
         if (instance == null)
@@ -68,6 +74,7 @@ public class PlayerController : MonoBehaviour
         theSR = GetComponent<SpriteRenderer>();
 
         startSpeed = moveSpeed;
+        startGravity = theRB.gravityScale;
         canMove = true;
     }
 
@@ -81,48 +88,52 @@ public class PlayerController : MonoBehaviour
                 {
                     //Detect Input for Horizontal Movement
                     movX = Input.GetAxisRaw("Horizontal");
+                    movY = Input.GetAxisRaw("Vertical");
 
                     //Function for Checking if Player is Grounded
                     GroundCheck();
 
-                    //Whip Attack
-                    if (Input.GetButtonDown("Attack") && !isWallSliding && whipCounter <= 0)
+                    if (!onLadders)
                     {
-                        anim.SetTrigger("Attack");
-                        AudioManager.instance.PlaySFXAdjusted(6);
-                        whipCounter = timeBetweenWhips;
-                    }
+                        //Whip Attack
+                        if (Input.GetButtonDown("Attack") && !isWallSliding && whipCounter <= 0)
+                        {
+                            anim.SetTrigger("Attack");
+                            AudioManager.instance.PlaySFXAdjusted(6);
+                            whipCounter = timeBetweenWhips;
+                        }
 
-                    WhipCooldown();
+                        WhipCooldown();
 
-                    //Input for player to jump
-                    if (Input.GetButtonDown("Jump") && isGrounded || isWallSliding && Input.GetButtonDown("Jump"))
-                    {
-                        Jump();
-                    }
+                        //Input for player to jump
+                        if (Input.GetButtonDown("Jump") && isGrounded || isWallSliding && Input.GetButtonDown("Jump"))
+                        {
+                            Jump();
+                        }
 
-                    //WallJump 
-                    WallJump();
+                        //WallJump 
+                        WallJump();
 
-                    //Input for player to sprint
-                    if ((Input.GetButton("Sprint") || Input.GetAxis("Sprint") > 0.05f) && movX != 0 && currentStamina > staminaCost)
-                    {
-                        isSprinting = true;
-                        moveSpeed = sprintSpeed;
-                    }
-                    else
-                    {
-                        isSprinting = false;
-                        moveSpeed = startSpeed;
-                    }
+                        //Input for player to sprint
+                        if ((Input.GetButton("Sprint") || Input.GetAxis("Sprint") > 0.05f) && movX != 0 && currentStamina > staminaCost)
+                        {
+                            isSprinting = true;
+                            moveSpeed = sprintSpeed;
+                        }
+                        else
+                        {
+                            isSprinting = false;
+                            moveSpeed = startSpeed;
+                        }
 
-                    if (Input.GetButtonDown("Heal") && GameManager.instance.currentSouls >= 50 &&
-                    PlayerHealthController.instance.currentHealth < PlayerHealthController.instance.maxHealth && isGrounded)
-                    {
-                        PlayerHealthController.instance.RestoreHealth(PlayerHealthController.instance.maxHealth);
-                        GameManager.instance.SubtractSouls();
-                        waitCounter = waitToMove;
-                        Debug.Log("Healing");
+                        if (Input.GetButtonDown("Heal") && GameManager.instance.currentSouls >= 50 &&
+                        PlayerHealthController.instance.currentHealth < PlayerHealthController.instance.maxHealth && isGrounded)
+                        {
+                            PlayerHealthController.instance.RestoreHealth(PlayerHealthController.instance.maxHealth);
+                            GameManager.instance.SubtractSouls();
+                            waitCounter = waitToMove;
+                            Debug.Log("Healing");
+                        }
                     }
                 }
                 else
@@ -154,17 +165,25 @@ public class PlayerController : MonoBehaviour
         {
             if (waitCounter <= 0)
             {
-                theRB.velocity = new Vector2(movX * moveSpeed, theRB.velocity.y);
-                Flip();
-
-                if (isSprinting)
+                if (!onLadders)
                 {
-                    UseStamina();
+                    theRB.velocity = new Vector2(movX * moveSpeed, theRB.velocity.y);
+                    Flip();
+
+                    if (isSprinting)
+                    {
+                        UseStamina();
+                    }
+
+                    if (isWallSliding)
+                    {
+                        theRB.velocity = new Vector2(theRB.velocity.x, Mathf.Clamp(theRB.velocity.y, wallJumpSpeed, float.MaxValue));
+                    }
                 }
-
-                if (isWallSliding)
+                else if (onLadders)
                 {
-                    theRB.velocity = new Vector2(theRB.velocity.x, Mathf.Clamp(theRB.velocity.y, wallJumpSpeed, float.MaxValue));
+                    theRB.gravityScale = 0;
+                    theRB.velocity = new Vector2(movX * climbHorizontalSpeed, movY * climbSpeed);
                 }
             }
             else
@@ -262,6 +281,7 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("moveSpeed", Mathf.Abs(theRB.velocity.x));
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("wallGrabbing", isWallSliding);
+        anim.SetBool("onLadders", onLadders);
     }
 
     public void KnockBack(int objectKnockBackX, int objectKnockBackY)
@@ -271,6 +291,23 @@ public class PlayerController : MonoBehaviour
 
         knockBackCounter = knockBackLength;
         theRB.velocity = Vector2.zero;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Ladder")
+        {
+            onLadders = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Ladder")
+        {
+            onLadders = false;
+            theRB.gravityScale = startGravity;
+        }
     }
 
     void OnDrawGizmosSelected()
