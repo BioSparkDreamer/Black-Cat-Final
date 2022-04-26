@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyHealthController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class EnemyHealthController : MonoBehaviour
     public GameObject enemyObject;
     public GameObject deathEffect;
     public bool isMonster, isSlime, isBat;
+    public Slider healthSlider;
 
     [Header("Sprite Color Variables")]
     private SpriteRenderer theSR;
@@ -18,6 +20,10 @@ public class EnemyHealthController : MonoBehaviour
     void Start()
     {
         theSR = GetComponent<SpriteRenderer>();
+
+        healthSlider.maxValue = health;
+        healthSlider.value = health;
+
         defaultColor = theSR.color;
     }
 
@@ -39,6 +45,7 @@ public class EnemyHealthController : MonoBehaviour
     {
         health -= damageToDeal;
         hurtCounter = hurtTime;
+        healthSlider.value = health;
 
         if (health <= 0)
         {
@@ -60,9 +67,7 @@ public class EnemyHealthController : MonoBehaviour
             }
 
             if (deathEffect != null)
-            {
                 Instantiate(deathEffect, transform.position, transform.rotation);
-            }
         }
     }
 }

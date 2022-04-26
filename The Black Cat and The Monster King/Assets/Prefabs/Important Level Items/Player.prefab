@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 7174050606400940314}
   - component: {fileID: 7174050606400940309}
   - component: {fileID: 7174050606400940308}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Whip Attack Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToDeal: 1
+  bossDamageToDeal: 5
 --- !u!1 &7174050606510283702
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +159,7 @@ MonoBehaviour:
   canMove: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
   groundCheckPoint: {fileID: 7174050605392721626}
   knockBackLength: 0.5
   knockBackForceX: 0
@@ -167,13 +168,17 @@ MonoBehaviour:
   maxStamina: 100
   currentStamina: 0
   sprintSpeed: 8
-  refillSpeed: 0.05
-  staminaCost: 0.4
+  refillSpeed: 0.06
+  staminaCost: 0.45
   wallJumpTime: 0.2
   wallJumpSpeed: 0.3
   wallDistance: 0.5
-  timeBetweenWhips: 0.3
+  timeBetweenWhips: 0.5
   waitToMove: 2
+  soulsNeeded: 100
+  climbSpeed: 7
+  climbHorizontalSpeed: 3.5
+  onLadders: 0
 --- !u!114 &7174050606510283724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,13 +193,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 9
   currentHealth: 0
-  invincibleLength: 0.8
-  theSR: {fileID: 7174050606510283725}
+  invincibleLength: 1
   transparentPerHit: 0.11
   spriteAlphaValue: 1
   startAlphaValue: 0
   hurtColor: {r: 0.8679245, g: 0.3717337, b: 0.3717337, a: 1}
   defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  deathEffect: {fileID: 7418479041062474967, guid: a7e225e7353689146949e84d4d625269, type: 3}
 --- !u!212 &7174050606510283725
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -233,7 +238,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1582501771
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 155814491ef08c443835ae38dfce2f8b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -280,8 +285,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.021068484, y: -0.31980073}
-  m_Size: {x: 0.87923366, y: 1.3586876}
+  m_Offset: {x: 0.019223213, y: -0.12282002}
+  m_Size: {x: 0.6553917, y: 1.7526491}
   m_Direction: 0
 --- !u!95 &7174050606510283727
 Animator:

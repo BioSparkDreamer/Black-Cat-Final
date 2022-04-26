@@ -7,6 +7,13 @@ public class HubMapPoint : MonoBehaviour
     public HubMapPoint up, right, down, left;
     public string levelToLoad, levelToCheck, levelName;
     public bool isLevel, isLocked;
+    public SpriteRenderer theSR;
+    public Sprite hubSprite, lockedSprite;
+
+    void Awake()
+    {
+        theSR = GetComponent<SpriteRenderer>();
+    }
 
     void Start()
     {
@@ -33,6 +40,15 @@ public class HubMapPoint : MonoBehaviour
         if (levelToLoad == levelToCheck)
         {
             isLocked = false;
+        }
+
+        if (isLocked && isLevel)
+        {
+            theSR.sprite = lockedSprite;
+        }
+        else if (!isLocked && isLevel)
+        {
+            theSR.sprite = hubSprite;
         }
     }
 

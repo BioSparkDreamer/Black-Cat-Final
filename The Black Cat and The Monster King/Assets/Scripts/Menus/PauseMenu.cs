@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
     public static PauseMenu instance;
 
     [Header("Pausing Variables")]
-    public CanvasGroup pauseScreen;
+    public GameObject pauseScreen;
     public bool canPause = true;
     public GameObject resumeButton;
     [HideInInspector] public bool isPaused;
@@ -46,17 +46,15 @@ public class PauseMenu : MonoBehaviour
     public void PauseandUnPause()
     {
         //Do if Player is Pausing the Game
-        if (pauseScreen.alpha == 0)
+        if (!pauseScreen.activeInHierarchy)
         {
-            pauseScreen.alpha = 1;
+            pauseScreen.SetActive(true);
             OpenPauseMenu();
             isPaused = true;
             Time.timeScale = 0;
 
             if (PlayerController.instance != null)
                 PlayerController.instance.canMove = false;
-
-            AudioManager.instance.StopLevelMusic();
 
             //Make EventSystem select resume button when pausing game
             EventSystem.current.SetSelectedGameObject(null);
@@ -72,12 +70,11 @@ public class PauseMenu : MonoBehaviour
             CloseCredits();
             Time.timeScale = 1;
             isPaused = false;
-            AudioManager.instance.ResumeLevelMusic();
 
             if (PlayerController.instance != null)
                 PlayerController.instance.canMove = true;
 
-            pauseScreen.alpha = 0;
+            pauseScreen.SetActive(false);
         }
     }
 

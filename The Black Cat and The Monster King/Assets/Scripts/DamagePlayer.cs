@@ -9,16 +9,6 @@ public class DamagePlayer : MonoBehaviour
     public int knockBackForceX, knockBackForceY;
     public bool canKnockBack;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")

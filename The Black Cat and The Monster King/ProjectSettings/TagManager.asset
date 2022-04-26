@@ -8,6 +8,7 @@ TagManager:
   - HeartsFull
   - Enemy
   - Ladder
+  - MonsterKing
   layers:
   - Default
   - TransparentFX
@@ -17,11 +18,11 @@ TagManager:
   - UI
   - Ground
   - No Collisions
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground (For Boss Shots)
+  - Boss Shot
+  - Player
+  - Whip
+  - Trampolines
   - 
   - 
   - 

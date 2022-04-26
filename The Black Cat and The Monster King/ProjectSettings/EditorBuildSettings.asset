@@ -6,21 +6,30 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/Non Levels/MainMenu.unity
     guid: 8947dfc4b35fc71428fab3cea053f634
   - enabled: 1
-    path: Assets/Scenes/Cutscene.unity
+    path: Assets/Scenes/Non Levels/Cutscene.unity
     guid: 94c6f31a478c5d54db82b5023c12f5df
   - enabled: 1
-    path: Assets/Scenes/HubWorld.unity
+    path: Assets/Scenes/Non Levels/HubWorld.unity
     guid: 9a0fc881d2ea8834e8e4a20479eac477
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
+    path: Assets/Scenes/Levels/Level1.unity
     guid: 887b0af292d293245bb1296868b46361
   - enabled: 1
-    path: Assets/Scenes/Level2.unity
+    path: Assets/Scenes/Levels/Level2.unity
+    guid: 2a1e40c6400acee4c92fec5c6e90b359
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level3.unity
+    guid: d60dac1b37f251c44a295780bc77e303
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level4.unity
     guid: f89cff5b273da4c46a0027bc8dec01c1
   - enabled: 1
-    path: Assets/Scenes/WinMenu.unity
-    guid: 295176e578c9afc409240c1b21c54873
+    path: Assets/Scenes/Levels/BossFightLevel.unity
+    guid: a2b6e886757dba6428e75a875fcb4f47
+  - enabled: 1
+    path: Assets/Scenes/Non Levels/CreditsScroll.unity
+    guid: 855cb3c7b33215644877a44ba271a3b1
   m_configObjects: {}

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
 
 public class UIController : MonoBehaviour
@@ -17,18 +16,16 @@ public class UIController : MonoBehaviour
     public Slider staminaSlider;
     public TMP_Text staminaText;
 
-    [Header("Game Over Screen")]
-    public GameObject gameOverScreen;
-    public bool isDead;
-    public GameObject restartButton;
-
     [Header("Soul Collect Variables")]
     public Slider soulSlider;
     public TMP_Text soulText;
 
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
     void Start()
@@ -38,17 +35,12 @@ public class UIController : MonoBehaviour
         UpdateSoulUI();
     }
 
-    void Update()
-    {
-
-    }
-
     public void UpdateHealthUI()
     {
         healthSlider.maxValue = PlayerHealthController.instance.maxHealth;
         healthSlider.value = PlayerHealthController.instance.currentHealth;
 
-        healthText.text = "Life Force: " + PlayerHealthController.instance.currentHealth.ToString()
+        healthText.text = "LIVES: " + PlayerHealthController.instance.currentHealth.ToString()
         + "/" + PlayerHealthController.instance.maxHealth.ToString();
     }
 
@@ -62,8 +54,7 @@ public class UIController : MonoBehaviour
             PlayerController.instance.currentStamina = PlayerController.instance.maxStamina;
         }
 
-        staminaText.text = "Stamina: " + PlayerController.instance.currentStamina.ToString("F0");
-
+        staminaText.text = "STAMINA: " + PlayerController.instance.currentStamina.ToString("F0");
     }
 
     public void UpdateSoulUI()
@@ -71,24 +62,6 @@ public class UIController : MonoBehaviour
         soulSlider.maxValue = GameManager.instance.maxSouls;
         soulSlider.value = GameManager.instance.currentSouls;
 
-        soulText.text = "Souls: " + GameManager.instance.currentSouls.ToString() + "/" + GameManager.instance.maxSouls.ToString();
-    }
-
-    public void GameOverScreen()
-    {
-        isDead = true;
-        PauseMenu.instance.canPause = false;
-        StartCoroutine(ShowGameOverScreenCO());
-
-    }
-
-    public IEnumerator ShowGameOverScreenCO()
-    {
-        yield return new WaitForSeconds(0.8f);
-        AudioManager.instance.StopLevelMusic();
-        gameOverScreen.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(restartButton);
-        Time.timeScale = 0;
+        soulText.text = "SOULS: " + GameManager.instance.currentSouls.ToString() + "/" + GameManager.instance.maxSouls.ToString();
     }
 }

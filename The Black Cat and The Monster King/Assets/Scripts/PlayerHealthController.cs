@@ -15,9 +15,10 @@ public class PlayerHealthController : MonoBehaviour
     private float invincibleCounter;
 
     [Header("Player Related Variables")]
-    public SpriteRenderer theSR;
+    private SpriteRenderer theSR;
     public float transparentPerHit, spriteAlphaValue, startAlphaValue;
     public Color hurtColor, defaultColor;
+    public GameObject deathEffect;
 
     void Awake()
     {
@@ -27,12 +28,12 @@ public class PlayerHealthController : MonoBehaviour
         }
 
         currentHealth = maxHealth;
-        defaultColor = theSR.color;
     }
 
     void Start()
     {
         theSR = GetComponent<SpriteRenderer>();
+        defaultColor = theSR.color;
         startAlphaValue = spriteAlphaValue;
     }
 
@@ -43,10 +44,11 @@ public class PlayerHealthController : MonoBehaviour
         {
             theSR.color = new Color(hurtColor.r, hurtColor.g, hurtColor.b, spriteAlphaValue);
             invincibleCounter -= Time.deltaTime;
-        }
-        else
-        {
-            theSR.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, spriteAlphaValue);
+
+            if (invincibleCounter <= 0)
+            {
+                theSR.color = new Color(defaultColor.r, defaultColor.g, defaultColor.b, spriteAlphaValue);
+            }
         }
     }
 
@@ -55,7 +57,6 @@ public class PlayerHealthController : MonoBehaviour
         if (invincibleCounter <= 0)
         {
             currentHealth -= damageToDeal;
-            AudioManager.instance.PlaySFXAdjusted(4);
 
             for (int i = 0; i < damageToDeal; i++)
             {
@@ -66,11 +67,19 @@ public class PlayerHealthController : MonoBehaviour
             if (currentHealth <= 0)
             {
                 currentHealth = 0;
+
+                if (deathEffect != null)
+                    Instantiate(deathEffect, transform.position, Quaternion.identity);
+
                 AudioManager.instance.PlaySFXAdjusted(3);
-                UIController.instance.GameOverScreen();
+                GameOverMenu.instance.GameOverScreen();
+            }
+            else
+            {
+                invincibleCounter = invincibleLength;
+                AudioManager.instance.PlaySFXAdjusted(4);
             }
 
-            invincibleCounter = invincibleLength;
             UIController.instance.UpdateHealthUI();
         }
     }

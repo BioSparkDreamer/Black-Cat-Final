@@ -79,7 +79,7 @@ public class CutsceneDialogue : MonoBehaviour
 
             if (Input.GetButtonDown("Pause"))
             {
-                if (pauseMenu.pauseScreen.alpha == 1)
+                if (pauseMenu.pauseScreen.activeInHierarchy)
                 {
                     EventSystem.current.SetSelectedGameObject(null);
                     EventSystem.current.SetSelectedGameObject(pauseMenu.resumeButton);

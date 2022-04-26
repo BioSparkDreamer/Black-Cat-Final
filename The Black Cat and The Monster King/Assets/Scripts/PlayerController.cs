@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     [Header("Soul Counter Variables")]
     public float waitToMove;
     private float waitCounter;
+    public int soulsNeeded;
 
     [Header("Ladder Variables")]
     public float climbSpeed;
@@ -126,7 +127,7 @@ public class PlayerController : MonoBehaviour
                             moveSpeed = startSpeed;
                         }
 
-                        if (Input.GetButtonDown("Heal") && GameManager.instance.currentSouls >= 50 &&
+                        if (Input.GetButtonDown("Heal") && GameManager.instance.currentSouls >= soulsNeeded &&
                         PlayerHealthController.instance.currentHealth < PlayerHealthController.instance.maxHealth && isGrounded)
                         {
                             PlayerHealthController.instance.RestoreHealth(PlayerHealthController.instance.maxHealth);

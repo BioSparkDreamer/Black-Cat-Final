@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Source Variables")]
     public AudioSource[] sfx;
-    public AudioSource levelMusic, menuMusic, cutSceneMusic;
+    public AudioSource levelMusic, menuMusic, cutSceneMusic, bossMusic;
     public bool isLevel, isMenu, isCutscene;
 
     void Awake()
@@ -22,19 +22,14 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         if (isLevel)
-        {
             levelMusic.Play();
-        }
 
         if (isMenu)
-        {
             menuMusic.Play();
-        }
 
         if (isCutscene)
-        {
             cutSceneMusic.Play();
-        }
+
     }
 
     public void PlaySFX(int sfxToPlay)
@@ -49,15 +44,30 @@ public class AudioManager : MonoBehaviour
         sfx[sfxToPlay].Play();
     }
 
-    public void StopLevelMusic()
+    public void StopMusic()
     {
-        levelMusic.Pause();
-        menuMusic.Play();
+        levelMusic.Stop();
+        menuMusic.Stop();
+        cutSceneMusic.Stop();
+        bossMusic.Stop();
     }
 
-    public void ResumeLevelMusic()
+    public void PlayBossMusic()
     {
+        StopMusic();
+        bossMusic.Play();
+    }
+
+    public void StopBossMusic()
+    {
+        StopMusic();
         levelMusic.Play();
-        menuMusic.Stop();
+    }
+
+    public void PlayGameOverMusic()
+    {
+        StopMusic();
+        menuMusic.Play();
     }
 }
+

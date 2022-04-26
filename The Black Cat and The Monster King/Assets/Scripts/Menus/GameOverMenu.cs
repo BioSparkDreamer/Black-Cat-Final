@@ -6,24 +6,75 @@ using UnityEngine.EventSystems;
 
 public class GameOverMenu : MonoBehaviour
 {
-    [Header("Pause Menu Variables")]
+    public static GameOverMenu instance;
+
+    [Header("Game Over Variables")]
+    public GameObject gameOverScreen;
+    public GameObject restartButton;
+    public float timeToShow;
+
+    [Header("Game Over Menu Variables")]
     public GameObject[] buttons;
-    public CanvasGroup creditsMenu, controlsMenu;
+    public CanvasGroup gameOverMenu, optionsMenu, controlsMenu, creditsMenu;
 
-    void Start()
+    void Awake()
     {
-
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
-    void Update()
+    public void GameOverScreen()
     {
+        StartCoroutine(ShowGameOverScreenCO());
+    }
 
+    public IEnumerator ShowGameOverScreenCO()
+    {
+        PauseMenu.instance.canPause = false;
+        PlayerController.instance.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(timeToShow);
+
+        gameOverScreen.SetActive(true);
+        OpenGameOverMenu();
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(restartButton);
+
+        AudioManager.instance.PlayGameOverMusic();
+        Time.timeScale = 0;
     }
 
     public void ChangeActiveButtons(int buttonToChose)
     {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(buttons[buttonToChose]);
+    }
+
+    public void OpenGameOverMenu()
+    {
+        gameOverMenu.alpha = 1;
+        gameOverMenu.blocksRaycasts = true;
+    }
+
+    public void CloseGameOverMenu()
+    {
+        gameOverMenu.alpha = 0;
+        gameOverMenu.blocksRaycasts = false;
+    }
+
+    public void OpenOptions()
+    {
+        optionsMenu.alpha = 1;
+        optionsMenu.blocksRaycasts = true;
+    }
+
+    public void CloseOptions()
+    {
+        optionsMenu.alpha = 0;
+        optionsMenu.blocksRaycasts = false;
     }
 
     public void OpenCredits()

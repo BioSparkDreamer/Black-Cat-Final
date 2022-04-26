@@ -46,3 +46,6 @@ MonoBehaviour:
   spawnPoint: {x: 0, y: 0, z: 0}
   maxSouls: 100
   currentSouls: 0
+  soulParticleEffect: {fileID: 6938752410569820224, guid: c1b6ee19ae9d5e64d8f9b0fef894488d, type: 3}
+  nextLevel: HubWorld
+  waitToRespawn: 1.5

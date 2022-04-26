@@ -10,9 +10,4 @@ public class Destroy : MonoBehaviour
     {
         Destroy(gameObject, lifeTime);
     }
-
-    void Update()
-    {
-
-    }
 }

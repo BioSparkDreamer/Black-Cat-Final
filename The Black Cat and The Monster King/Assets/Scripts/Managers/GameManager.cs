@@ -12,13 +12,12 @@ public class GameManager : MonoBehaviour
     public Vector3 spawnPoint;
 
     [Header("Soul Collecing System Variables")]
-    public int maxSouls = 50;
+    public int maxSouls = 100;
     public int currentSouls;
     public GameObject soulParticleEffect;
 
     [Header("Loading Next Level")]
     public string nextLevel;
-    public bool levelIsEnding;
 
     [Header("Respawning")]
     public float waitToRespawn;
@@ -34,17 +33,12 @@ public class GameManager : MonoBehaviour
         }
 
         theFader = FindObjectOfType<FadingScreen>();
+        checkPoints = FindObjectsOfType<CheckPoint>();
     }
 
     void Start()
     {
-        checkPoints = FindObjectsOfType<CheckPoint>();
         spawnPoint = PlayerController.instance.transform.position;
-    }
-
-    void Update()
-    {
-
     }
 
     public void SetSpawnPoint(Vector3 newSpawnPoint)
@@ -77,7 +71,6 @@ public class GameManager : MonoBehaviour
         currentSouls = 0;
         AudioManager.instance.PlaySFXAdjusted(10);
         Instantiate(soulParticleEffect, PlayerController.instance.transform.position, Quaternion.identity);
-
         UIController.instance.UpdateSoulUI();
     }
 
@@ -88,9 +81,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator RespawnCO()
     {
-        PlayerHealthController.instance.theSR.enabled = false;
-        PauseMenu.instance.canPause = false;
-        UIController.instance.isDead = true;
+        PlayerController.instance.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(waitToRespawn - (1 / theFader.fadeSpeed));
 
@@ -100,17 +91,10 @@ public class GameManager : MonoBehaviour
 
         theFader.FadeFromBlack();
 
+        PlayerController.instance.gameObject.SetActive(true);
         PlayerController.instance.transform.position = spawnPoint;
-        PlayerHealthController.instance.theSR.enabled = true;
         PlayerController.instance.currentStamina = PlayerController.instance.maxStamina;
         UIController.instance.UpdateStaminaUI();
-        PauseMenu.instance.canPause = true;
-        UIController.instance.isDead = false;
-    }
-
-    public void LoadNextLevel()
-    {
-        SceneManager.LoadScene(nextLevel);
     }
 
     public void EndLevel()
@@ -123,11 +107,12 @@ public class GameManager : MonoBehaviour
         PauseMenu.instance.canPause = false;
         PlayerController.instance.canMove = false;
 
-        levelIsEnding = true;
         PlayerController.instance.theRB.velocity = new Vector2(5f, PlayerController.instance.theRB.velocity.y);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
+
         theFader.FadeToBlack();
+
         yield return new WaitForSeconds((1f / theFader.fadeSpeed) + 1f);
 
         StoreSaveData();
