@@ -3001,6 +3001,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4125745580193662070, guid: 5020641159f462347aeb17f13feea651, type: 3}
+      propertyPath: m_text
+      value: 'LEFT STICK
+
+        A BUTTON
+
+        B BUTTON
+
+        RT TRIGGER
+
+        X
+        BUTTON
+
+        MENU BUTTON
+
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 7136581714315455662, guid: 5020641159f462347aeb17f13feea651, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

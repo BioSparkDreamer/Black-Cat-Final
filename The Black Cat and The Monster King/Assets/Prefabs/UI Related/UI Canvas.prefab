@@ -2325,6 +2325,24 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -231.0741
       objectReference: {fileID: 0}
+    - target: {fileID: 8005726230514905449, guid: 617cfd070fa8c9844a3eb7eb66246bce, type: 3}
+      propertyPath: m_text
+      value: 'LEFT STICK
+
+        A BUTTON
+
+        B BUTTON
+
+        RT TRIGGER
+
+        X
+        BUTTON
+
+        MENU BUTTON
+
+
+'
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4262062567257558616, guid: 617cfd070fa8c9844a3eb7eb66246bce, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 617cfd070fa8c9844a3eb7eb66246bce, type: 3}
@@ -2577,6 +2595,24 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 6078331044308921400}
+    - target: {fileID: 486709055575935966, guid: 0a2bfd25b32bb724c94777c8e481e1f6, type: 3}
+      propertyPath: m_text
+      value: 'LEFT STICK
+
+        A BUTTON
+
+        B BUTTON
+
+        RT TRIGGER
+
+        X
+        BUTTON
+
+        MENU BUTTON
+
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 603342037446203997, guid: 0a2bfd25b32bb724c94777c8e481e1f6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
